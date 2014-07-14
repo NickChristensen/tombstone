@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  padding: 20px;
+  color: #666;
+  font-size: 48px;
+  font-family: "Avenir Next"; }
+
+p {
+  margin: 0 20px; }
+
+.draggable {
+  color: #333;
+  font-weight: 600;
+  display: inline-block;
+  border-bottom: 1px dashed;
+  cursor: ew-resize;
+  line-height: 1.2; }

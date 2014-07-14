@@ -1,0 +1,8 @@
+{
+  "name": "tombstone",
+  "dependencies": {
+    "scrubbing.js": "~0.0.3",
+    "countUp.js": "~1.1.1",
+    "numeral": "~1.5.3"
+  }
+}
