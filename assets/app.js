@@ -37,7 +37,9 @@ var myAdapter = {
 	body: document.querySelector('body'),
   init : function ( scrubbingElement ) {},
   start : function ( scrubbingElement ){
+  	// lock the cursor to resize
   	this.body.style.cursor = 'ew-resize';
+  	// strip extra characters, pass number to scrubber
     return parseInt ( scrubbingElement.node.textContent.replace(',',''), 10 );
   },
   change : function ( scrubbingElement, value ) {
@@ -50,10 +52,12 @@ var myAdapter = {
     document.getElementById('total').textContent = numeral(result.total).format('0,0.00');
   },
   end : function ( scrubbingElement ) {
+  	// Release the cursor style
   	this.body.style.cursor = '';
   }
 };
 
+// Init the draggable numbers
 var draggables = document.querySelectorAll('.draggable');
 for (var i = draggables.length - 1; i >= 0; i--) {
 	new Scrubbing ( draggables[i] , {
@@ -67,4 +71,5 @@ for (var i = draggables.length - 1; i >= 0; i--) {
 	});
 }
 
+// Trigger the calculation - This should be abstracted out to a separate function
 myAdapter.change();
