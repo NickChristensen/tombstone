@@ -49,7 +49,7 @@ var myAdapter = {
 			formattedValue = numeral(Math.abs(value)).format('0,0');
 			scrubbingElement.node.textContent = formattedValue;
 		}
-		var result = findPayment( document.getElementById('price').textContent.replace(',',''), document.getElementById('down').textContent.replace(',',''), document.getElementById('rate').textContent.replace(',',''), document.getElementById('duration').textContent.replace(',','') );
+		var result = findPayment( document.getElementById('price').textContent.replace(/,/g,''), document.getElementById('down').textContent.replace(/,/g,''), document.getElementById('rate').textContent.replace(/,/g,''), document.getElementById('duration').textContent.replace(/,/g,'') );
 		document.getElementById('payment').textContent = numeral(result.payment).format('0,0.00');
 		document.getElementById('total').textContent = numeral(result.total).format('0,0.00');
 	},
