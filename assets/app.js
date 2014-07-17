@@ -31,8 +31,6 @@ function findPayment( price, down, rate, duration){
 	return result;
 }
 
-
-
 var myAdapter = {
 	body: document.querySelector('body'),
 	init : function ( scrubbingElement ) {},
@@ -43,9 +41,10 @@ var myAdapter = {
 		return parseInt ( scrubbingElement.node.textContent.replace(',',''), 10 );
 	},
 	change : function ( scrubbingElement, value ) {
+
 		if(scrubbingElement){
-			value = numeral(value).format('0,0');
-			scrubbingElement.node.textContent = value;
+			formattedValue = numeral(Math.abs(value)).format('0,0');
+			scrubbingElement.node.textContent = formattedValue;
 		}
 		var result = findPayment( document.getElementById('price').textContent.replace(',',''), document.getElementById('down').textContent.replace(',',''), document.getElementById('rate').textContent.replace(',',''), document.getElementById('duration').textContent.replace(',','') );
 		document.getElementById('payment').textContent = numeral(result.payment).format('0,0.00');
