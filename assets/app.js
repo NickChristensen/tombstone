@@ -35,10 +35,13 @@ var myAdapter = {
 	body: document.querySelector('body'),
 	init : function ( scrubbingElement ) {},
 	start : function ( scrubbingElement ){
+		var initValue = parseInt ( scrubbingElement.node.textContent.replace(/,/g,''), 10 );
 		// lock the cursor to resize
 		this.body.style.cursor = 'ew-resize';
+		// Variable Resistance based on starting number
+		scrubbingElement.options.resolver.divider = Math.abs(1000/initValue);
 		// strip extra characters, pass number to scrubber
-		return parseInt ( scrubbingElement.node.textContent.replace(',',''), 10 );
+		return initValue;
 	},
 	change : function ( scrubbingElement, value ) {
 
