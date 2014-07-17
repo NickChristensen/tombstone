@@ -60,7 +60,6 @@ var myAdapter = {
 };
 
 var myWheelDriver = (function(window, undefined){
-
 	return {
 		init : function ( scrubbingElement ) {
 			scrubbingElement.node.addEventListener("mousewheel", function ( e ) {
@@ -70,14 +69,10 @@ var myWheelDriver = (function(window, undefined){
 				var delta = e.webkitDirectionInvertedFromDevice ? startValue - e.wheelDelta : startValue + e.wheelDelta;
 				scrubbingElement.options.adapter.change ( scrubbingElement, delta, e.wheelDelta );
 			}, false);
-
 		},
-
 		remove : function ( scrubbingElement ) { }
 	};
-
 })(window);
-
 
 // Init the draggable numbers
 var draggables = document.querySelectorAll('.draggable');
