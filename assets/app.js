@@ -35,18 +35,16 @@ function findPayment( price, down, rate, duration){
 
 var myAdapter = {
 	body: document.querySelector('body'),
-  init : function ( scrubbingElement ) {
-  	var result = findPayment( document.getElementById('price').textContent.replace(',',''), document.getElementById('down').textContent.replace(',',''), document.getElementById('rate').textContent.replace(',',''), document.getElementById('duration').textContent.replace(',','') );
-  	document.getElementById('payment').textContent = numeral(result.payment).format('0,0.00');
-  	document.getElementById('total').textContent = numeral(result.total).format('0,0.00');
-  },
+  init : function ( scrubbingElement ) {},
   start : function ( scrubbingElement ){
   	this.body.style.cursor = 'ew-resize';
     return parseInt ( scrubbingElement.node.textContent.replace(',',''), 10 );
   },
   change : function ( scrubbingElement, value ) {
-  	value = numeral(value).format('0,0');
-    scrubbingElement.node.textContent = value;
+  	if(scrubbingElement){
+	  	value = numeral(value).format('0,0');
+	    scrubbingElement.node.textContent = value;
+	  }
     var result = findPayment( document.getElementById('price').textContent.replace(',',''), document.getElementById('down').textContent.replace(',',''), document.getElementById('rate').textContent.replace(',',''), document.getElementById('duration').textContent.replace(',','') );
     document.getElementById('payment').textContent = numeral(result.payment).format('0,0.00');
     document.getElementById('total').textContent = numeral(result.total).format('0,0.00');
@@ -64,6 +62,9 @@ for (var i = draggables.length - 1; i >= 0; i--) {
 			Scrubbing.driver.Touch,
 			Scrubbing.driver.MouseWheel
 		],
-		adapter  : myAdapter
+		adapter  : myAdapter,
+		resolver : Scrubbing.resolver.HorizontalProvider()
 	});
 }
+
+myAdapter.change();
