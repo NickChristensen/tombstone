@@ -32,21 +32,23 @@ function findPayment( price, down, rate, duration){
 }
 
 var myAdapter = {
-	body: document.querySelector('body'),
+	body: document.querySelector('body').style,
 	init : function ( scrubbingElement ) {},
 	start : function ( scrubbingElement ){
-		var initValue = parseInt ( scrubbingElement.node.textContent.replace(/,/g,''), 10 );
+		var initValue = parseFloat ( scrubbingElement.node.textContent.replace(/,/g,'') );
+		initValue = initValue ? initValue : 1;
 		// lock the cursor to resize
-		this.body.style.cursor = 'ew-resize';
+		this.body.cursor = 'ew-resize';
 		// Variable Resistance based on starting number
-		scrubbingElement.options.resolver.divider = Math.abs(1000/initValue);
+		scrubbingElement.options.resolver.divider = 1000/initValue;
 		// strip extra characters, pass number to scrubber
 		return initValue;
 	},
 	change : function ( scrubbingElement, value ) {
-
 		if(scrubbingElement){
-			formattedValue = numeral(Math.abs(value)).format('0,0');
+			var decimals = scrubbingElement.node.dataset.decimals;
+			var formatString = decimals ? '0,0.00' : '0,0';
+			formattedValue = numeral(value).format(formatString);
 			scrubbingElement.node.textContent = formattedValue;
 		}
 		var result = findPayment( document.getElementById('price').textContent.replace(/,/g,''), document.getElementById('down').textContent.replace(/,/g,''), document.getElementById('rate').textContent.replace(/,/g,''), document.getElementById('duration').textContent.replace(/,/g,'') );
@@ -55,24 +57,9 @@ var myAdapter = {
 	},
 	end : function ( scrubbingElement ) {
 		// Release the cursor style
-		this.body.style.cursor = '';
+		this.body.cursor = '';
 	}
 };
-
-var myWheelDriver = (function(window, undefined){
-	return {
-		init : function ( scrubbingElement ) {
-			scrubbingElement.node.addEventListener("mousewheel", function ( e ) {
-				e.preventDefault();
-				var startValue = scrubbingElement.options.adapter.start ( scrubbingElement );
-				// Try to detect if natural scrolling is enabled. Only works in Safari: https://code.google.com/p/chromium/issues/detail?id=156551 Probably ok, natural scrollers prob don't use chrome much
-				var delta = e.webkitDirectionInvertedFromDevice ? startValue - e.wheelDelta : startValue + e.wheelDelta;
-				scrubbingElement.options.adapter.change ( scrubbingElement, delta, e.wheelDelta );
-			}, false);
-		},
-		remove : function ( scrubbingElement ) { }
-	};
-})(window);
 
 // Init the draggable numbers
 var draggables = document.querySelectorAll('.draggable');
@@ -80,11 +67,9 @@ for (var i = draggables.length - 1; i >= 0; i--) {
 	new Scrubbing ( draggables[i] , {
 		driver : [
 			Scrubbing.driver.Mouse,
-			Scrubbing.driver.Touch,
-			myWheelDriver
+			Scrubbing.driver.Touch
 		],
 		adapter  : myAdapter,
-		resolver : Scrubbing.resolver.HorizontalProvider()
 	});
 }
 
