@@ -32,10 +32,7 @@ function findPayment( price, down, rate, duration){
 var myAdapter = {
 	body: document.querySelector('body').style,
 	init : function ( scrubbingElement ) {
-		this.price = document.getElementById('price').textContent.replace(/,/g,'');
-		this.down = document.getElementById('down').textContent.replace(/,/g,'');
-		this.rate = document.getElementById('rate').textContent.replace(/,/g,'');
-		this.duration = document.getElementById('duration').textContent.replace(/,/g,'');
+		this[scrubbingElement.node.id] = scrubbingElement.node.textContent.replace(/,/g,'');
 	},
 	start : function ( scrubbingElement ){
 		// Determine if we need decimals
