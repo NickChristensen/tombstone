@@ -49,6 +49,9 @@ var myAdapter = {
 	},
 	change : function ( scrubbingElement, value ) {
 		if(scrubbingElement){
+			if( !scrubbingElement.node.dataset.decimals ){
+				value = Math.floor(value);
+			}
 			formattedValue = numeral(value).format(this.formatString);
 			scrubbingElement.node.textContent = formattedValue;
 			this[scrubbingElement.node.id] = value;
