@@ -2,18 +2,30 @@
 <html>
 <head>
 	<title>Codename: Tombstone</title>
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css">
 	<link rel="stylesheet" type="text/css" href="assets/style.css">
 </head>
 <body>
 
-<p>Price: $<span class="draggable" id="price">30,000</span></p>
-<p>Down Payment: $<span class="draggable" id="down">2,000</span></p>
-<p>Interest Rate: <span class="draggable" id="rate" data-decimals="true">5.00</span>%</p>
-<p>Length: <span class="draggable" id="duration">5</span> years</p>
+<dl>
+	<dt>Price:</dt>
+	<dd>$<span class="draggable" id="price">30,000</span></dd>
 
-<br>
-<p>Payment: $<span id="payment"></span></p>
-<p>Total Paid: $<span id="total"></span></p>
+	<dt>Down Payment:</dt>
+	<dd>$<span class="draggable" id="down">2,000</span></dd>
+
+	<dt>Interest Rate:</dt>
+	<dd><span class="draggable" id="rate" data-decimals="true">5.00</span>%</dd>
+
+	<dt>Length:</dt>
+	<dd><span class="draggable" id="duration">5</span> years</dd>
+
+	<dt>Payment:</dt>
+	<dd>$<span id="payment"></span></dd>
+
+	<dt>Total Paid:</dt>
+	<dd>$<span id="total"></span></dd>
+</dl>
 
 <script src="bower_components/scrubbing.js/dist/Scrubbing.min.js"></script>
 <script src="bower_components/countUp.js/countUp.min.js"></script>

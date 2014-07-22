@@ -5,6 +5,11 @@ body {
   font-size: 48px;
   font-family: "Avenir Next"; }
 
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
 p {
   margin: 0 20px; }
 
@@ -15,3 +20,14 @@ p {
   border-bottom: 1px dashed;
   cursor: ew-resize;
   line-height: 1.2; }
+
+dl {
+  margin: 0;
+  width: 100%; }
+  dl dt, dl dd {
+    float: left;
+    margin: 0;
+    padding: 15px;
+    width: 50%; }
+  dl dt {
+    text-align: right; }
