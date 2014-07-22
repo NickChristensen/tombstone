@@ -48,7 +48,11 @@ var myAdapter = {
 		return initValue;
 	},
 	change : function ( scrubbingElement, value ) {
-		if( !scrubbingElement.node.dataset.decimals ){
+		// Round the value to the correct digits
+		if( scrubbingElement.node.dataset.decimals ){
+			value = Math.round(value*100)/100;
+		}
+		else{
 			value = Math.floor(value);
 		}
 		formattedValue = numeral(value).format(this.formatString);
