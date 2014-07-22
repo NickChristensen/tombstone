@@ -1,3 +1,5 @@
+var draggables = document.querySelectorAll('.draggable');
+
 /*
 * Takes price, down payment yearly rate (percent), and duration (years).
 * Outputs monthly payment, total paid, ratio of interest, more?
@@ -28,6 +30,37 @@ function findPayment( price, down, rate, duration){
 
 	return result;
 }
+
+function updateFromUrl(){
+	var parts = window.location.hash.substr(2).split("-");
+	if (draggables.length === parts.length){
+		for (var i = draggables.length - 1; i >= 0; i--) {
+			var formatString = draggables[i].dataset.decimals ? '0,0.00' : '0,0';
+			var value = parseFloat( parts[i] );
+			if (!isNaN( value )){
+				draggables[i].textContent = numeral( value ).format(formatString);
+			}
+		}
+	}
+	init();
+}
+
+function init(){
+	// Init the draggable numbers
+	for (var i = draggables.length - 1; i >= 0; i--) {
+		new Scrubbing ( draggables[i] , {
+			driver : [
+				Scrubbing.driver.Mouse,
+				Scrubbing.driver.Touch
+			],
+			adapter  : myAdapter,
+		});
+	}
+	// Trigger the calculation
+	myAdapter.calc();
+}
+
+
 
 var myAdapter = {
 	body: document.querySelector('body').style,
@@ -68,20 +101,13 @@ var myAdapter = {
 	end : function ( scrubbingElement ) {
 		// Release the cursor style
 		this.body.cursor = '';
+		// Update the URL
+		var hash = [this.price, this.down, this.rate, this.duration].join("-");
+		history.replaceState({}, '', '#/' + hash);
 	}
 };
 
-// Init the draggable numbers
-var draggables = document.querySelectorAll('.draggable');
-for (var i = draggables.length - 1; i >= 0; i--) {
-	new Scrubbing ( draggables[i] , {
-		driver : [
-			Scrubbing.driver.Mouse,
-			Scrubbing.driver.Touch
-		],
-		adapter  : myAdapter,
-	});
-}
+window.addEventListener("hashchange", updateFromUrl);
 
-// Trigger the calculation
-myAdapter.calc();
+// Parse Url
+updateFromUrl();
