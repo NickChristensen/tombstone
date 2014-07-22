@@ -48,15 +48,15 @@ var myAdapter = {
 		return initValue;
 	},
 	change : function ( scrubbingElement, value ) {
-		if(scrubbingElement){
-			if( !scrubbingElement.node.dataset.decimals ){
-				value = Math.floor(value);
-			}
-			formattedValue = numeral(value).format(this.formatString);
-			scrubbingElement.node.textContent = formattedValue;
-			this[scrubbingElement.node.id] = value;
+		if( !scrubbingElement.node.dataset.decimals ){
+			value = Math.floor(value);
 		}
-
+		formattedValue = numeral(value).format(this.formatString);
+		scrubbingElement.node.textContent = formattedValue;
+		this[scrubbingElement.node.id] = value;
+		this.calc();
+	},
+	calc : function(){
 		var result = findPayment( this.price, this.down, this.rate, this.duration );
 		document.getElementById('payment').textContent = numeral(result.payment).format('0,0.00');
 		document.getElementById('total').textContent = numeral(result.total).format('0,0.00');
@@ -79,5 +79,5 @@ for (var i = draggables.length - 1; i >= 0; i--) {
 	});
 }
 
-// Trigger the calculation - This should be abstracted out to a separate function
-myAdapter.change();
+// Trigger the calculation
+myAdapter.calc();
