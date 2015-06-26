@@ -109,5 +109,11 @@ var myAdapter = {
 
 window.addEventListener("hashchange", updateFromUrl);
 
+for (var i = draggables.length - 1; i >= 0; i--) {
+	draggables[i].addEventListener("click", function(){
+		this.focus();
+	});
+}
+
 // Parse Url
 updateFromUrl();
